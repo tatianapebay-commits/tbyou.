@@ -1,0 +1,227 @@
+/* =========================================================
+   PANEL DE ADMINISTRACIÓN — mismos colores que la tienda
+========================================================= */
+:root {
+    --rosa: #e8a2b5;
+    --rosa-oscuro: #c97a93;
+    --rosa-claro: #fbf4f6;
+    --fondo: #fdf8fb;
+    --texto: #4a4a4a;
+    --gris: #8a8a8a;
+    --borde: #f0d9e1;
+    --rojo: #c0392b;
+    --verde: #2e8b57;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body.admin {
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 15px;
+}
+
+.admin a { color: var(--rosa-oscuro); }
+.admin h1 { font-size: 1.6rem; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.admin h2 { font-size: 1.05rem; margin-bottom: 14px; }
+.admin small { color: var(--gris); }
+
+/* ---------- Barra superior ---------- */
+.admin-barra {
+    background: #fff;
+    border-bottom: 1px solid var(--borde);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 12px 28px;
+    flex-wrap: wrap;
+}
+.admin-logo {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.5rem;
+    color: var(--rosa-oscuro) !important;
+    text-decoration: none;
+}
+.admin-logo span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    color: var(--gris);
+    margin-left: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.admin-menu { display: flex; gap: 4px; flex: 1; flex-wrap: wrap; }
+.admin-menu a {
+    color: var(--texto) !important;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.admin-menu a i { color: var(--rosa); margin-right: 4px; }
+.admin-menu a:hover { background: var(--rosa-claro); }
+.admin-menu a.activo { background: var(--rosa-claro); color: var(--rosa-oscuro) !important; }
+
+.admin-usuario { display: flex; align-items: center; gap: 14px; font-size: 0.9rem; }
+.admin-btn-link {
+    background: none; border: none; cursor: pointer;
+    color: var(--rosa-oscuro); font: inherit; font-weight: 600;
+}
+
+/* ---------- Contenido ---------- */
+.admin-contenido { max-width: 1200px; margin: 0 auto; padding: 28px; }
+.admin-titulo {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; flex-wrap: wrap; margin-bottom: 20px;
+}
+
+/* ---------- Botones ---------- */
+.admin-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--rosa); color: #fff !important;
+    border: none; border-radius: 20px;
+    padding: 9px 18px;
+    font: inherit; font-weight: 600; font-size: 0.9rem;
+    text-decoration: none; cursor: pointer;
+}
+.admin-btn:hover { background: var(--rosa-oscuro); }
+.admin-btn.secundario { background: #fff; color: var(--rosa-oscuro) !important; border: 1px solid var(--rosa); }
+.admin-btn.secundario:hover { background: var(--rosa-claro); }
+.admin-btn.peligro { background: #fff; color: var(--rojo) !important; border: 1px solid #e6b0aa; }
+.admin-btn.peligro:hover { background: #fdecea; }
+.admin-btn.chico { padding: 6px 10px; font-size: 0.8rem; border-radius: 8px; }
+
+/* ---------- Avisos ---------- */
+.admin-aviso {
+    padding: 12px 16px; border-radius: 10px; margin-bottom: 18px;
+    background: #eaf7ef; color: var(--verde); border: 1px solid #bfe3cc;
+}
+.admin-aviso.error { background: #fdecea; color: var(--rojo); border-color: #f2c4bf; }
+.admin-vacio { color: var(--gris); padding: 20px 0; }
+.admin-nota { color: var(--gris); font-size: 0.85rem; margin: 10px 0 16px; }
+
+/* ---------- Tarjetas del panel ---------- */
+.admin-tarjetas {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px; margin: 20px 0 28px;
+}
+.admin-tarjeta {
+    background: #fff; border: 1px solid var(--borde); border-radius: 14px;
+    padding: 18px 20px; text-decoration: none;
+    display: flex; flex-direction: column; gap: 4px;
+    color: var(--texto) !important;
+}
+.admin-tarjeta:hover { border-color: var(--rosa); }
+.admin-tarjeta span { font-size: 0.85rem; color: var(--gris); }
+.admin-tarjeta strong { font-size: 1.7rem; color: var(--rosa-oscuro); }
+.admin-tarjeta.alerta strong { color: var(--rojo); }
+
+.admin-dos-columnas { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+.admin-caja { background: #fff; border: 1px solid var(--borde); border-radius: 14px; padding: 20px; min-width: 0; }
+
+/* ---------- Tablas ---------- */
+.admin-tabla-scroll { overflow-x: auto; background: #fff; border: 1px solid var(--borde); border-radius: 14px; }
+.admin-tabla { width: 100%; border-collapse: collapse; }
+.admin-tabla th, .admin-tabla td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--borde); vertical-align: middle; }
+.admin-tabla th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gris); font-weight: 600; }
+.admin-tabla tbody tr:last-child td { border-bottom: none; }
+.admin-tabla tbody tr:hover { background: var(--rosa-claro); }
+.admin-tabla tr.inactivo td { opacity: 0.55; }
+.admin-tabla tfoot td { border-top: 2px solid var(--borde); border-bottom: none; }
+.admin-miniatura { width: 44px; height: 44px; object-fit: cover; border-radius: 8px; background: var(--rosa-claro); display: block; }
+.admin-acciones { white-space: nowrap; text-align: right; }
+.admin-acciones form { display: inline; }
+
+.stock { font-weight: 600; }
+.stock.bajo { color: #d68910; }
+.stock.cero { color: var(--rojo); }
+
+.estado {
+    display: inline-block; padding: 3px 10px; border-radius: 12px;
+    font-size: 0.75rem; font-weight: 600; text-transform: capitalize;
+    background: #eee; color: #555;
+}
+.estado.pendiente { background: #fff4e0; color: #b9770e; }
+.estado.pagado    { background: #e8f1fd; color: #2e6bb8; }
+.estado.enviado   { background: #f1e8fd; color: #7d3cb5; }
+.estado.entregado { background: #eaf7ef; color: var(--verde); }
+.estado.cancelado { background: #fdecea; color: var(--rojo); }
+
+/* ---------- Filtros y pestañas ---------- */
+.admin-filtros { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+.admin-filtros input, .admin-filtros select,
+.admin-form input, .admin-form select, .admin-form textarea, .admin-estado select,
+.admin-login input {
+    padding: 9px 12px; border: 1px solid var(--borde); border-radius: 8px;
+    font: inherit; background: #fff; color: var(--texto);
+}
+.admin-filtros input { min-width: 220px; }
+.admin input:focus, .admin select:focus, .admin textarea:focus { outline: 2px solid var(--rosa); border-color: transparent; }
+
+.admin-pestanas { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.admin-pestanas a {
+    padding: 6px 14px; border-radius: 16px; text-decoration: none;
+    border: 1px solid var(--borde); background: #fff; font-size: 0.85rem;
+    text-transform: capitalize; color: var(--texto) !important;
+}
+.admin-pestanas a.activo { background: var(--rosa); border-color: var(--rosa); color: #fff !important; }
+
+/* ---------- Formularios ---------- */
+.admin-form {
+    background: #fff; border: 1px solid var(--borde); border-radius: 14px;
+    padding: 24px; max-width: 760px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px;
+}
+.admin-form label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 0.85rem; }
+.admin-form .ancho { grid-column: 1 / -1; }
+.admin-form textarea { min-height: 90px; resize: vertical; }
+.admin-form .admin-check { flex-direction: row; align-items: center; gap: 8px; }
+.admin-check input { accent-color: var(--rosa-oscuro); width: 18px; height: 18px; }
+.admin-form-botones { display: flex; align-items: center; gap: 16px; }
+.admin-foto { display: flex; gap: 16px; align-items: center; }
+.admin-foto img { width: 96px; height: 96px; object-fit: cover; border-radius: 12px; background: var(--rosa-claro); flex-shrink: 0; }
+.admin-foto label { flex: 1; }
+
+.admin-datos { display: grid; grid-template-columns: 90px 1fr; gap: 8px 12px; margin-bottom: 18px; font-size: 0.9rem; }
+.admin-datos dt { color: var(--gris); }
+.admin-datos dd { overflow-wrap: anywhere; }
+.admin-estado { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+.admin-estado label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 0.85rem; }
+
+/* ---------- Login ---------- */
+.admin-login-fondo { min-height: 100vh; display: grid; place-items: center; padding: 16px; background: var(--rosa-claro); }
+.admin-login {
+    background: #fff; border: 1px solid var(--borde); border-radius: 18px;
+    padding: 36px 32px; width: 100%; max-width: 380px;
+    display: flex; flex-direction: column; gap: 14px;
+}
+.admin-login h1 { font-family: 'Pacifico', cursive; font-weight: normal; color: var(--rosa-oscuro); justify-content: center; font-size: 2rem; }
+.admin-login > p { text-align: center; color: var(--gris); margin-top: -10px; margin-bottom: 6px; }
+.admin-login label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 0.85rem; }
+.admin-login .admin-btn { justify-content: center; margin-top: 6px; }
+.admin-volver { text-align: center; font-size: 0.85rem; }
+
+/* ---------- Celular ---------- */
+@media (max-width: 800px) {
+    .admin-barra { padding: 12px 16px; gap: 10px; }
+    .admin-menu { order: 3; flex-basis: 100%; overflow-x: auto; flex-wrap: nowrap; }
+    .admin-menu a { white-space: nowrap; }
+    .admin-usuario { margin-left: auto; }
+    .admin-contenido { padding: 20px 16px; }
+    .admin-dos-columnas, .admin-form { grid-template-columns: 1fr; }
+    .admin-filtros input { min-width: 0; flex: 1; }
+    .admin-caja { overflow-x: auto; }
+}
+
+/* Los campos ocupan todo el ancho de su columna y no heredan la negrita del label */
+.admin-form > *, .admin-login > * { min-width: 0; }
+.admin-form input, .admin-form select, .admin-form textarea, .admin-login input {
+    width: 100%; min-width: 0; font-weight: 400;
+}
+.admin-form input[type=checkbox] { width: 18px; }
+.admin-estado select, .admin-filtros input, .admin-filtros select { font-weight: 400; }
+@media (max-width: 800px) {
+    .admin-filtros input { flex-basis: 100%; }
+}

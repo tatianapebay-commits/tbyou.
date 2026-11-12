@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title><%= titulo %> | T.B.You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin admin-login-fondo">
+    <form class="admin-login" action="/admin/login" method="POST">
+        <h1>T.B.You</h1>
+        <p>Panel de administración</p>
+        <% if (error) { %><p class="admin-aviso error"><%= error %></p><% } %>
+        <label>Email
+            <input type="email" name="email" value="<%= email %>" required autofocus>
+        </label>
+        <label>Contraseña
+            <input type="password" name="password" required>
+        </label>
+        <button class="admin-btn">Ingresar</button>
+        <a href="/" class="admin-volver">← Volver a la tienda</a>
+    </form>
+</body>
+</html>

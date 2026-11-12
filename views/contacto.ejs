@@ -1,0 +1,16 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="contacto">
+    <h1>Contacto</h1>
+    <form class="contacto-form" onsubmit="event.preventDefault(); this.innerHTML='<p class=&quot;mensaje-ok&quot;>¡Gracias! Te respondemos a la brevedad.</p>'">
+        <div class="form-group">
+            <input type="text" name="nombre" placeholder="Nombre" required>
+            <input type="email" name="email" placeholder="Email" required>
+        </div>
+        <textarea name="mensaje" placeholder="Tu mensaje" required></textarea>
+        <button type="submit">Enviar</button>
+    </form>
+</section>
+
+<%- include('partials/footer') %>

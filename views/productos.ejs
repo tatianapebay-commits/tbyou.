@@ -1,0 +1,29 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="catalogo">
+    <h1><%= titulo %></h1>
+
+    <form class="filtros" method="get" action="/productos">
+        <select name="categoria" onchange="this.form.submit()">
+            <option value="">Todas las categorías</option>
+            <% categorias.forEach(c => { %>
+                <option value="<%= c.id %>" <%= c.id === categoriaId ? 'selected' : '' %>><%= c.nombre %></option>
+            <% }) %>
+        </select>
+        <input type="search" name="buscar" placeholder="Buscar productos..." value="<%= buscar %>">
+        <button type="submit" class="boton">Buscar</button>
+    </form>
+
+    <% if (productos.length === 0) { %>
+        <p class="centrado">No encontramos productos con esos filtros.</p>
+    <% } %>
+
+    <div class="productos-grid">
+        <% productos.forEach(p => { %>
+            <%- include('partials/tarjeta-producto', { p }) %>
+        <% }) %>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

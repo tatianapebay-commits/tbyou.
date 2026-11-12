@@ -1,0 +1,60 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="carrito">
+    <h1>Mi carrito</h1>
+
+    <!-- Se llena con /js/carrito.js a partir de lo guardado en el navegador -->
+    <div id="carrito-vacio" class="centrado" hidden>
+        <p>Tu carrito está vacío.</p>
+        <p><br><a href="/productos" class="boton">Ver productos</a></p>
+    </div>
+
+    <div id="carrito-contenido" class="carrito-grid" hidden>
+        <div>
+            <table class="carrito-tabla">
+                <thead>
+                    <tr><th></th><th>Producto</th><th>Precio</th><th>Cantidad</th><th>Subtotal</th><th></th></tr>
+                </thead>
+                <tbody id="carrito-items"></tbody>
+            </table>
+            <p class="carrito-total">Total: <strong id="carrito-total">$0</strong></p>
+            <p id="carrito-aviso" class="aviso" hidden></p>
+        </div>
+
+        <form id="form-compra" class="form-compra">
+            <h2>Tus datos</h2>
+            <div class="form-group">
+                <input name="nombre" placeholder="Nombre" required>
+                <input name="apellido" placeholder="Apellido" required>
+            </div>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="tel" name="telefono" placeholder="Teléfono (WhatsApp)" required>
+            <input name="direccion_envio" placeholder="Dirección de envío (o 'Retiro en el local')" required>
+
+            <h2>Forma de pago</h2>
+            <label class="opcion-pago"><input type="radio" name="medio_pago" value="transferencia" checked> Transferencia bancaria</label>
+            <label class="opcion-pago"><input type="radio" name="medio_pago" value="mercadopago"> Mercado Pago</label>
+            <label class="opcion-pago"><input type="radio" name="medio_pago" value="efectivo"> Efectivo al retirar en el local</label>
+
+            <textarea name="notas" maxlength="300" placeholder="Notas (opcional): talle de anillo, color, horario..."></textarea>
+
+            <p id="form-error" class="aviso error" hidden></p>
+            <button type="submit" class="boton boton-grande">Confirmar pedido</button>
+            <p class="ayuda">Al confirmar, el pedido llega por correo a la tienda y te abrimos WhatsApp para coordinar el pago y el envío.</p>
+        </form>
+    </div>
+
+    <!-- Confirmación después de comprar -->
+    <div id="compra-ok" class="compra-ok" hidden>
+        <h2 id="ok-titulo"></h2>
+        <p id="ok-pago"></p>
+        <p>Envianos el pedido por WhatsApp para coordinar el pago y el envío:</p>
+        <p><a id="ok-whatsapp" class="boton boton-grande boton-whatsapp" target="_blank" rel="noopener">
+            <i class="fab fa-whatsapp"></i> Enviar pedido por WhatsApp
+        </a></p>
+        <p><a href="/productos">Seguir comprando</a></p>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

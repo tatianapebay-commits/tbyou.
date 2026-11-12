@@ -1,0 +1,79 @@
+<%- include('../partials/admin-inicio') %>
+
+<div class="admin-titulo">
+    <h1><%= titulo %></h1>
+    <a href="/admin/productos">← Volver a productos</a>
+</div>
+
+<% if (error) { %><p class="admin-aviso error"><%= error %></p><% } %>
+
+<!-- enctype multipart: hace falta para poder enviar la foto -->
+<form class="admin-form" method="POST" enctype="multipart/form-data"
+      action="<%= producto.id ? `/admin/productos/${producto.id}/editar` : '/admin/productos/nuevo' %>">
+
+    <label class="ancho">Nombre *
+        <input name="nombre" value="<%= producto.nombre || '' %>" maxlength="120" required>
+    </label>
+
+    <label class="ancho">Descripción
+        <textarea name="descripcion" maxlength="500"><%= producto.descripcion || '' %></textarea>
+    </label>
+
+    <label>Categoría *
+        <select name="categoria_id" required>
+            <option value="">Elegí una…</option>
+            <% categorias.forEach(c => { %>
+                <option value="<%= c.id %>" <%= c.id === producto.categoria_id ? 'selected' : '' %>><%= c.nombre %></option>
+            <% }) %>
+        </select>
+    </label>
+
+    <label>Proveedor
+        <select name="proveedor_id">
+            <option value="">Sin proveedor</option>
+            <% proveedores.forEach(pr => { %>
+                <option value="<%= pr.id %>" <%= pr.id === producto.proveedor_id ? 'selected' : '' %>><%= pr.nombre %></option>
+            <% }) %>
+        </select>
+    </label>
+
+    <label>Material *
+        <select name="material" required>
+            <% MATERIALES.forEach(m => { %>
+                <option value="<%= m %>" <%= m === producto.material ? 'selected' : '' %>><%= m %></option>
+            <% }) %>
+        </select>
+    </label>
+
+    <label>Stock *
+        <input type="number" name="stock" min="0" step="1" value="<%= Number.isFinite(producto.stock) ? producto.stock : '' %>" required>
+    </label>
+
+    <label>Precio de costo *
+        <input type="number" name="precio_costo" min="0" step="0.01" value="<%= Number.isFinite(producto.precio_costo) ? producto.precio_costo : '' %>" required>
+    </label>
+
+    <label>Precio de venta *
+        <input type="number" name="precio_venta" min="0.01" step="0.01" value="<%= Number.isFinite(producto.precio_venta) ? producto.precio_venta : '' %>" required>
+    </label>
+
+    <div class="ancho admin-foto">
+        <img id="vista-previa" src="<%= producto.imagen_url || '/images/sin-imagen.svg' %>" alt=""
+             onerror="this.onerror=null;this.src='/images/sin-imagen.svg'">
+        <label>Foto <small>(.jpg, .png o .webp, hasta 3 MB<%= producto.imagen_url ? '; si no elegís otra, queda la actual' : '' %>)</small>
+            <input type="file" name="imagen" accept=".jpg,.jpeg,.png,.webp"
+                   onchange="if (this.files[0]) document.getElementById('vista-previa').src = URL.createObjectURL(this.files[0])">
+        </label>
+    </div>
+
+    <label class="ancho admin-check">
+        <input type="checkbox" name="activo" <%= producto.activo ? 'checked' : '' %>> Mostrar en la tienda
+    </label>
+
+    <div class="ancho admin-form-botones">
+        <button class="admin-btn"><%= producto.id ? 'Guardar cambios' : 'Crear producto' %></button>
+        <a href="/admin/productos">Cancelar</a>
+    </div>
+</form>
+
+<%- include('../partials/admin-fin') %>

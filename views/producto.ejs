@@ -1,0 +1,34 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<section class="detalle">
+    <img src="<%= producto.imagen_url || '/images/sin-imagen.svg' %>" alt="<%= producto.nombre %>"
+         onerror="this.onerror=null;this.src='/images/sin-imagen.svg'">
+
+    <div class="detalle-info">
+        <a href="/productos?categoria=<%= producto.categoria_id %>" class="etiqueta"><%= producto.categoria %></a>
+        <h1><%= producto.nombre %></h1>
+        <p class="precio grande">$<%= producto.precio_venta.toLocaleString('es-AR') %></p>
+        <% if (producto.descripcion) { %><p><%= producto.descripcion %></p><% } %>
+        <p><strong>Material:</strong> <%= producto.material %></p>
+        <% if (producto.stock > 0) { %>
+            <p class="stock">Stock disponible: <%= producto.stock %></p>
+            <div class="comprar">
+                <label>Cantidad
+                    <input type="number" id="cantidad" min="1" max="<%= producto.stock %>" value="1">
+                </label>
+                <button type="button" class="boton agregar-carrito" data-cantidad-desde="#cantidad"
+                        data-id="<%= producto.id %>" data-nombre="<%= producto.nombre %>"
+                        data-precio="<%= producto.precio_venta %>" data-stock="<%= producto.stock %>"
+                        data-imagen="<%= producto.imagen_url || '' %>">
+                    <i class="fas fa-cart-plus"></i> Agregar al carrito
+                </button>
+            </div>
+        <% } else { %>
+            <p class="stock sin-stock">Sin stock por el momento</p>
+        <% } %>
+        <p><a href="/productos">← Volver a productos</a></p>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

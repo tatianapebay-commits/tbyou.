@@ -1,0 +1,62 @@
+<%- include('../partials/admin-inicio') %>
+
+<div class="admin-titulo">
+    <h1>Pedido #<%= pedido.id %> <span class="estado <%= pedido.estado %>"><%= pedido.estado %></span></h1>
+    <a href="/admin/pedidos">← Volver a pedidos</a>
+</div>
+
+<div class="admin-dos-columnas">
+    <section class="admin-caja">
+        <h2>Productos</h2>
+        <table class="admin-tabla">
+            <thead><tr><th>Producto</th><th>Cant.</th><th>Precio</th><th>Subtotal</th></tr></thead>
+            <tbody>
+            <% pedido.items.forEach(i => { %>
+                <tr>
+                    <td><%= i.producto %></td>
+                    <td><%= i.cantidad %></td>
+                    <td><%= pesos(i.precio_unitario) %></td>
+                    <td><%= pesos(i.subtotal) %></td>
+                </tr>
+            <% }) %>
+            </tbody>
+            <tfoot><tr><td colspan="3"><strong>Total</strong></td><td><strong><%= pesos(pedido.total) %></strong></td></tr></tfoot>
+        </table>
+    </section>
+
+    <section class="admin-caja">
+        <h2>Datos</h2>
+        <dl class="admin-datos">
+            <dt>Fecha</dt><dd><%= new Date(pedido.fecha).toLocaleString('es-AR') %></dd>
+            <dt>Cliente</dt><dd><%= pedido.cliente %></dd>
+            <dt>Email</dt><dd><a href="mailto:<%= pedido.email %>"><%= pedido.email %></a></dd>
+            <dt>Teléfono</dt><dd><% if (pedido.telefono) { %><a href="https://wa.me/<%= String(pedido.telefono).replace(/\D/g, '') %>" target="_blank" rel="noopener"><%= pedido.telefono %></a><% } else { %>—<% } %></dd>
+            <dt>Envío</dt><dd><%= pedido.direccion_envio %></dd>
+            <dt>Pago</dt><dd><%= pedido.medio_pago %></dd>
+            <% if (pedido.notas) { %><dt>Notas</dt><dd><%= pedido.notas %></dd><% } %>
+        </dl>
+
+        <% if (pedido.estado !== 'cancelado') { %>
+        <form class="admin-estado" action="/admin/pedidos/<%= pedido.id %>/estado" method="POST">
+            <label>Cambiar estado
+                <select name="estado">
+                    <% ESTADOS.forEach(e => { %>
+                        <option value="<%= e %>" <%= e === pedido.estado ? 'selected' : '' %>><%= e %></option>
+                    <% }) %>
+                </select>
+            </label>
+            <button class="admin-btn">Guardar</button>
+        </form>
+        <p class="admin-nota">Si lo cancelás, el stock de los productos vuelve a sumarse y el pedido ya no se puede modificar.</p>
+        <% } else { %>
+        <p class="admin-nota">Este pedido está cancelado: el stock ya se devolvió.</p>
+        <form action="/admin/pedidos/<%= pedido.id %>/eliminar" method="POST"
+              data-confirmar="¿Eliminar el pedido #<%= pedido.id %>? No se puede deshacer."
+              onsubmit="return confirm(this.dataset.confirmar)">
+            <button class="admin-btn peligro"><i class="fas fa-trash"></i> Eliminar pedido</button>
+        </form>
+        <% } %>
+    </section>
+</div>
+
+<%- include('../partials/admin-fin') %>

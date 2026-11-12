@@ -1,0 +1,32 @@
+<%- include('../partials/admin-inicio') %>
+
+<div class="admin-titulo">
+    <h1>Categorías</h1>
+    <a class="admin-btn" href="/admin/categorias/nueva"><i class="fas fa-plus"></i> Nueva categoría</a>
+</div>
+
+<div class="admin-tabla-scroll">
+<table class="admin-tabla">
+    <thead><tr><th>#</th><th>Nombre</th><th>Descripción</th><th>Productos a la venta</th><th></th></tr></thead>
+    <tbody>
+    <% categorias.forEach(c => { %>
+        <tr>
+            <td><%= c.id %></td>
+            <td><strong><%= c.nombre %></strong></td>
+            <td><%= c.descripcion || '—' %></td>
+            <td><a href="/admin/productos?categoria=<%= c.id %>"><%= c.cantidad_productos %></a></td>
+            <td class="admin-acciones">
+                <a class="admin-btn chico secundario" href="/admin/categorias/<%= c.id %>/editar" ><i class="fas fa-pen"></i> Editar</a>
+                <form action="/admin/categorias/<%= c.id %>/eliminar" method="POST"
+                      data-confirmar="¿Eliminar la categoría &quot;<%= c.nombre %>&quot;?"
+                      onsubmit="return confirm(this.dataset.confirmar)">
+                    <button class="admin-btn chico peligro" ><i class="fas fa-trash"></i> Borrar</button>
+                </form>
+            </td>
+        </tr>
+    <% }) %>
+    </tbody>
+</table>
+</div>
+
+<%- include('../partials/admin-fin') %>

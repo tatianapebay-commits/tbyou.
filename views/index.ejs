@@ -1,0 +1,68 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<!-- BANNER / CARRUSEL -->
+<section class="carousel">
+    <div class="carousel-container">
+        <div class="slide active">
+            <img src="/images/banner1.jpg" alt="Banner 1" onerror="this.closest('.carousel').classList.add('sin-banners')">
+        </div>
+        <div class="slide">
+            <img src="/images/banner2.jpg" alt="Banner 2">
+        </div>
+        <div class="slide">
+            <img src="/images/banner3.jpg" alt="Banner 3">
+        </div>
+        <button class="prev" aria-label="Anterior">&#10094;</button>
+        <button class="next" aria-label="Siguiente">&#10095;</button>
+    </div>
+</section>
+
+<!-- HERO -->
+<section class="hero">
+    <h1>WEB T.B.You</h1>
+    <p>Fiestas · Acero quirúrgico · Acero blanco · Acero dorado · Mochilas · Billeteras · Accesorios para el pelo</p>
+</section>
+
+<!-- CATEGORÍAS (salen de la base de datos) -->
+<section class="categorias">
+    <h2>Categorías</h2>
+    <div class="categorias-grid">
+        <% categorias.forEach(c => { %>
+            <a href="/productos?categoria=<%= c.id %>" class="categoria">
+                <span><%= c.nombre %></span>
+                <small><%= c.cantidad_productos %> productos</small>
+            </a>
+        <% }) %>
+    </div>
+</section>
+
+<!-- DESTACADOS -->
+<section>
+    <h2 class="titulo-seccion">Destacados</h2>
+    <div class="productos-grid">
+        <% destacados.forEach(p => { %>
+            <%- include('partials/tarjeta-producto', { p }) %>
+        <% }) %>
+    </div>
+    <p class="centrado"><a href="/productos" class="boton">Ver todos los productos</a></p>
+</section>
+
+<!-- INFO -->
+<section class="info">
+    <p>📦 Envíos a todo el país</p>
+    <p>💌 Contacto: tbyouaccesorios@gmail.com</p>
+    <p>📸 Instagram: @tbyouaccesorios</p>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+    <h3>Newsletter</h3>
+    <p>Registrate y recibí nuestras ofertas</p>
+    <form onsubmit="event.preventDefault(); this.innerHTML='<p>¡Gracias por suscribirte!</p>'">
+        <input type="email" placeholder="Tu correo" required>
+        <button type="submit">Enviar</button>
+    </form>
+</section>
+
+<%- include('partials/footer') %>

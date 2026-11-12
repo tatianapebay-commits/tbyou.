@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title><%= titulo %> | Administración T.B.You</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin">
+<header class="admin-barra">
+    <a href="/admin" class="admin-logo">T.B.You <span>Administración</span></a>
+    <nav class="admin-menu">
+        <a href="/admin" class="<%= seccion === 'panel' ? 'activo' : '' %>"><i class="fas fa-chart-pie"></i> Panel</a>
+        <a href="/admin/productos" class="<%= seccion === 'productos' ? 'activo' : '' %>"><i class="fas fa-gem"></i> Productos</a>
+        <a href="/admin/categorias" class="<%= seccion === 'categorias' ? 'activo' : '' %>"><i class="fas fa-tags"></i> Categorías</a>
+        <a href="/admin/proveedores" class="<%= seccion === 'proveedores' ? 'activo' : '' %>"><i class="fas fa-truck"></i> Proveedores</a>
+        <a href="/admin/pedidos" class="<%= seccion === 'pedidos' ? 'activo' : '' %>"><i class="fas fa-receipt"></i> Pedidos</a>
+    </nav>
+    <div class="admin-usuario">
+        <a href="/" target="_blank" title="Ver la tienda"><i class="fas fa-store"></i></a>
+        <span><%= admin.nombre %></span>
+        <form action="/admin/salir" method="POST"><button class="admin-btn-link">Salir</button></form>
+    </div>
+</header>
+
+<main class="admin-contenido">
+<% if (aviso) { %>
+    <p class="admin-aviso <%= aviso.tipo %>"><%= aviso.texto %></p>
+<% } %>
