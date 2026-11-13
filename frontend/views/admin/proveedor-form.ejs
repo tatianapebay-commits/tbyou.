@@ -1,0 +1,30 @@
+<%- include('../partials/admin-inicio') %>
+
+<div class="admin-titulo">
+    <h1><%= titulo %></h1>
+    <a href="/admin/proveedores">← Volver a proveedores</a>
+</div>
+
+<% if (error) { %><p class="admin-aviso error"><%= error %></p><% } %>
+
+<form class="admin-form" method="POST"
+      action="<%= proveedor.id ? `/admin/proveedores/${proveedor.id}/editar` : '/admin/proveedores/nuevo' %>">
+    <label class="ancho">Nombre *
+        <input name="nombre" value="<%= proveedor.nombre || '' %>" maxlength="100" required>
+    </label>
+    <label>Sitio web
+        <input type="url" name="sitio_web" value="<%= proveedor.sitio_web || '' %>" placeholder="https://…">
+    </label>
+    <label>Teléfono
+        <input name="telefono" value="<%= proveedor.telefono || '' %>">
+    </label>
+    <label>Compra mínima ($)
+        <input type="number" name="compra_minima" min="0" step="0.01" value="<%= proveedor.compra_minima ?? 0 %>">
+    </label>
+    <div class="ancho admin-form-botones">
+        <button class="admin-btn"><%= proveedor.id ? 'Guardar cambios' : 'Crear proveedor' %></button>
+        <a href="/admin/proveedores">Cancelar</a>
+    </div>
+</form>
+
+<%- include('../partials/admin-fin') %>

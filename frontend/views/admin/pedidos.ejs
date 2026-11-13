@@ -1,0 +1,38 @@
+<%- include('../partials/admin-inicio') %>
+
+<div class="admin-titulo">
+    <h1>Pedidos</h1>
+</div>
+
+<nav class="admin-pestanas">
+    <a href="/admin/pedidos" class="<%= estado === '' ? 'activo' : '' %>">Todos</a>
+    <% ESTADOS.forEach(e => { %>
+        <a href="/admin/pedidos?estado=<%= e %>" class="<%= estado === e ? 'activo' : '' %>"><%= e %></a>
+    <% }) %>
+</nav>
+
+<% if (!pedidos.length) { %>
+    <p class="admin-vacio">No hay pedidos<%= estado ? ` en estado "${estado}"` : '' %>.</p>
+<% } else { %>
+<div class="admin-tabla-scroll">
+<table class="admin-tabla">
+    <thead><tr><th>#</th><th>Fecha</th><th>Cliente</th><th>Productos</th><th>Pago</th><th>Total</th><th>Estado</th><th></th></tr></thead>
+    <tbody>
+    <% pedidos.forEach(p => { %>
+        <tr>
+            <td><%= p.id %></td>
+            <td><%= new Date(p.fecha).toLocaleDateString('es-AR') %></td>
+            <td><%= p.cliente %></td>
+            <td><%= p.cantidad_productos %></td>
+            <td><%= p.medio_pago %></td>
+            <td><%= pesos(p.total) %></td>
+            <td><span class="estado <%= p.estado %>"><%= p.estado %></span></td>
+            <td><a class="admin-btn chico secundario" href="/admin/pedidos/<%= p.id %>">Ver</a></td>
+        </tr>
+    <% }) %>
+    </tbody>
+</table>
+</div>
+<% } %>
+
+<%- include('../partials/admin-fin') %>

@@ -1,0 +1,33 @@
+<%- include('../partials/admin-inicio') %>
+
+<div class="admin-titulo">
+    <h1>Proveedores</h1>
+    <a class="admin-btn" href="/admin/proveedores/nuevo"><i class="fas fa-plus"></i> Nuevo proveedor</a>
+</div>
+
+<div class="admin-tabla-scroll">
+<table class="admin-tabla">
+    <thead><tr><th>#</th><th>Nombre</th><th>Sitio web</th><th>Teléfono</th><th>Compra mínima</th><th></th></tr></thead>
+    <tbody>
+    <% proveedores.forEach(p => { %>
+        <tr>
+            <td><%= p.id %></td>
+            <td><strong><%= p.nombre %></strong></td>
+            <td><% if (p.sitio_web) { %><a href="<%= p.sitio_web %>" target="_blank" rel="noopener"><%= p.sitio_web.replace(/^https?:\/\//, '') %></a><% } else { %>—<% } %></td>
+            <td><%= p.telefono || '—' %></td>
+            <td><%= pesos(p.compra_minima) %></td>
+            <td class="admin-acciones">
+                <a class="admin-btn chico secundario" href="/admin/proveedores/<%= p.id %>/editar" ><i class="fas fa-pen"></i> Editar</a>
+                <form action="/admin/proveedores/<%= p.id %>/eliminar" method="POST"
+                      data-confirmar="¿Eliminar a &quot;<%= p.nombre %>&quot;? Sus productos quedan sin proveedor."
+                      onsubmit="return confirm(this.dataset.confirmar)">
+                    <button class="admin-btn chico peligro" ><i class="fas fa-trash"></i> Borrar</button>
+                </form>
+            </td>
+        </tr>
+    <% }) %>
+    </tbody>
+</table>
+</div>
+
+<%- include('../partials/admin-fin') %>

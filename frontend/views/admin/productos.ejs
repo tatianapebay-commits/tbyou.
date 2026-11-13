@@ -1,0 +1,58 @@
+<%- include('../partials/admin-inicio') %>
+
+<div class="admin-titulo">
+    <h1>Productos</h1>
+    <a class="admin-btn" href="/admin/productos/nuevo"><i class="fas fa-plus"></i> Nuevo producto</a>
+</div>
+
+<form class="admin-filtros" method="GET">
+    <input type="search" name="buscar" value="<%= buscar %>" placeholder="Buscar por nombre…">
+    <select name="categoria">
+        <option value="">Todas las categorías</option>
+        <% categorias.forEach(c => { %>
+            <option value="<%= c.id %>" <%= c.id === categoria ? 'selected' : '' %>><%= c.nombre %></option>
+        <% }) %>
+    </select>
+    <button class="admin-btn secundario">Filtrar</button>
+    <% if (buscar || categoria) { %><a href="/admin/productos">Limpiar</a><% } %>
+</form>
+
+<% if (!productos.length) { %>
+    <p class="admin-vacio">No hay productos con ese filtro.</p>
+<% } else { %>
+<div class="admin-tabla-scroll">
+<table class="admin-tabla">
+    <thead>
+        <tr><th></th><th>Producto</th><th>Categoría</th><th>Costo</th><th>Venta</th><th>Stock</th><th>Estado</th><th></th></tr>
+    </thead>
+    <tbody>
+    <% productos.forEach(p => { %>
+        <tr class="<%= p.activo ? '' : 'inactivo' %>">
+            <td><img class="admin-miniatura" src="<%= p.imagen_url || '/images/sin-imagen.svg' %>" alt="" onerror="this.onerror=null;this.src='/images/sin-imagen.svg'"></td>
+            <td><strong><%= p.nombre %></strong><br><small><%= p.material %> · <%= p.proveedor || 'sin proveedor' %></small></td>
+            <td><%= p.categoria %></td>
+            <td><%= pesos(p.precio_costo) %></td>
+            <td><%= pesos(p.precio_venta) %></td>
+            <td><span class="stock <%= p.stock === 0 ? 'cero' : (p.stock <= 3 ? 'bajo' : '') %>"><%= p.stock %></span></td>
+            <td><%= p.activo ? 'A la venta' : 'Oculto' %></td>
+            <td class="admin-acciones">
+                <a class="admin-btn chico secundario" href="/admin/productos/<%= p.id %>/editar" ><i class="fas fa-pen"></i> Editar</a>
+                <form action="/admin/productos/<%= p.id %>/activo" method="POST">
+                    <button class="admin-btn chico secundario" title="<%= p.activo ? 'Ocultar de la tienda' : 'Mostrar en la tienda' %>">
+                        <i class="fas <%= p.activo ? 'fa-eye-slash' : 'fa-eye' %>"></i> <%= p.activo ? 'Ocultar' : 'Mostrar' %>
+                    </button>
+                </form>
+                <form action="/admin/productos/<%= p.id %>/eliminar" method="POST"
+                      data-confirmar="¿Eliminar &quot;<%= p.nombre %>&quot;? No se puede deshacer."
+                      onsubmit="return confirm(this.dataset.confirmar)">
+                    <button class="admin-btn chico peligro" ><i class="fas fa-trash"></i> Borrar</button>
+                </form>
+            </td>
+        </tr>
+    <% }) %>
+    </tbody>
+</table>
+</div>
+<% } %>
+
+<%- include('../partials/admin-fin') %>

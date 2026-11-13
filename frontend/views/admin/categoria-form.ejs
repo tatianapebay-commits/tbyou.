@@ -1,0 +1,24 @@
+<%- include('../partials/admin-inicio') %>
+
+<div class="admin-titulo">
+    <h1><%= titulo %></h1>
+    <a href="/admin/categorias">← Volver a categorías</a>
+</div>
+
+<% if (error) { %><p class="admin-aviso error"><%= error %></p><% } %>
+
+<form class="admin-form" method="POST"
+      action="<%= categoria.id ? `/admin/categorias/${categoria.id}/editar` : '/admin/categorias/nueva' %>">
+    <label class="ancho">Nombre *
+        <input name="nombre" value="<%= categoria.nombre || '' %>" maxlength="60" required>
+    </label>
+    <label class="ancho">Descripción
+        <input name="descripcion" value="<%= categoria.descripcion || '' %>" maxlength="255">
+    </label>
+    <div class="ancho admin-form-botones">
+        <button class="admin-btn"><%= categoria.id ? 'Guardar cambios' : 'Crear categoría' %></button>
+        <a href="/admin/categorias">Cancelar</a>
+    </div>
+</form>
+
+<%- include('../partials/admin-fin') %>

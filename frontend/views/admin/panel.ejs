@@ -1,0 +1,70 @@
+<%- include('../partials/admin-inicio') %>
+
+<h1>Hola, <%= admin.nombre %></h1>
+
+<div class="admin-tarjetas">
+    <a class="admin-tarjeta" href="/admin/productos">
+        <span>Productos a la venta</span>
+        <strong><%= resumen.productosActivos %></strong>
+        <% if (resumen.productosOcultos) { %><small><%= resumen.productosOcultos %> ocultos</small><% } %>
+    </a>
+    <a class="admin-tarjeta" href="/admin/pedidos?estado=pendiente">
+        <span>Pedidos pendientes</span>
+        <strong><%= resumen.pedidosPendientes %></strong>
+    </a>
+    <a class="admin-tarjeta" href="/admin/pedidos">
+        <span>Total vendido</span>
+        <strong><%= pesos(resumen.ventas) %></strong>
+        <small>sin contar cancelados</small>
+    </a>
+    <a class="admin-tarjeta <%= stockBajo.length ? 'alerta' : '' %>" href="#stock-bajo">
+        <span>Con stock bajo</span>
+        <strong><%= stockBajo.length %></strong>
+        <small><%= STOCK_BAJO %> unidades o menos</small>
+    </a>
+</div>
+
+<div class="admin-dos-columnas">
+    <section class="admin-caja">
+        <h2>Últimos pedidos</h2>
+        <% if (!ultimosPedidos.length) { %>
+            <p class="admin-vacio">Todavía no hay pedidos.</p>
+        <% } else { %>
+        <table class="admin-tabla">
+            <thead><tr><th>#</th><th>Cliente</th><th>Total</th><th>Estado</th></tr></thead>
+            <tbody>
+            <% ultimosPedidos.forEach(p => { %>
+                <tr>
+                    <td><a href="/admin/pedidos/<%= p.id %>"><%= p.id %></a></td>
+                    <td><%= p.cliente %></td>
+                    <td><%= pesos(p.total) %></td>
+                    <td><span class="estado <%= p.estado %>"><%= p.estado %></span></td>
+                </tr>
+            <% }) %>
+            </tbody>
+        </table>
+        <% } %>
+    </section>
+
+    <section class="admin-caja" id="stock-bajo">
+        <h2>Para reponer</h2>
+        <% if (!stockBajo.length) { %>
+            <p class="admin-vacio">Todos los productos tienen stock suficiente.</p>
+        <% } else { %>
+        <table class="admin-tabla">
+            <thead><tr><th>Producto</th><th>Stock</th><th></th></tr></thead>
+            <tbody>
+            <% stockBajo.forEach(p => { %>
+                <tr>
+                    <td><%= p.nombre %><br><small><%= p.proveedor || 'Sin proveedor' %></small></td>
+                    <td><span class="stock <%= p.stock === 0 ? 'cero' : 'bajo' %>"><%= p.stock %></span></td>
+                    <td><a class="admin-btn chico secundario" href="/admin/productos/<%= p.id %>/editar">Editar</a></td>
+                </tr>
+            <% }) %>
+            </tbody>
+        </table>
+        <% } %>
+    </section>
+</div>
+
+<%- include('../partials/admin-fin') %>
